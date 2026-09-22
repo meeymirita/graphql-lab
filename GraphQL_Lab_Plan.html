@@ -27,6 +27,14 @@
   .insight-box .tag { background: var(--red); }
   .note-box { background: #f4f4f6; border: 1px solid #d9d9e0; border-left: 5px solid #555a6e; border-radius: 4px; padding: 8px 14px; margin: 12px 0; }
   .note-box .tag { background: #555a6e; }
+  .next-box { background: #fff8e6; border: 1px solid #f0dca0; border-left: 5px solid #e0a800; border-radius: 4px; padding: 8px 14px; margin: 14px 0 6px 0; font-size: 13px; }
+  .next-box .tag { background: #e0a800; color: #3a2a00; }
+  .next-box ul { margin: 4px 0 2px 0; }
+  details.deep { border: 1px dashed var(--red-mid); border-radius: 4px; margin: 12px 0; background: #fff; }
+  details.deep summary { cursor: pointer; padding: 8px 14px; font-weight: bold; color: var(--red-dark); background: #fdf3ee; border-radius: 4px; list-style: none; }
+  details.deep summary::before { content: '▸ '; }
+  details.deep[open] summary::before { content: '▾ '; }
+  details.deep .deep-body { padding: 6px 16px 10px 16px; }
   .toc { background: #fdf5f0; border: 1px solid #d8e4f2; border-radius: 6px; padding: 14px 20px; margin: 16px 0 24px 0; }
   .glossary-item { margin: 0 0 10px 0; padding-left: 24px; text-indent: -24px; }
   .glossary-item b { color: var(--red-dark); }
@@ -72,6 +80,9 @@
   a.anchor { color: #e08a5c; text-decoration: none; margin-left: 6px; font-weight: normal; font-size: 0.8em; opacity: 0; }
   h2:hover a.anchor, .step-head:hover a.anchor { opacity: 1; }
   .step-head a.anchor { color: #fff; float: right; }
+  a.fnref { text-decoration: none; vertical-align: super; padding: 0 2px; }
+  a.fnref:hover { background: var(--red-light); border-radius: 3px; }
+  a.back { text-decoration: none; font-size: 0.9em; color: #d68356; margin-left: 4px; }
   .glossary-item:target, .step:target { outline: 2px solid var(--red); outline-offset: 4px; border-radius: 4px; }
   h2:target { background: var(--red-light); }
   .done-label { display: inline-block; margin-right: 8px; vertical-align: middle; }
@@ -82,7 +93,7 @@
   .step.is-done .step-body { border-color: #ddd; }
   .totop { position: fixed; right: 24px; bottom: 24px; background: var(--red); color: #fff; text-decoration: none; padding: 8px 12px; border-radius: 20px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
   @media (max-width: 900px) { .sidebar { position: fixed; z-index: 10; } main { padding: 56px 16px 60px 16px; } body.nav-collapsed main { padding-left: 16px; } }
-  @media print { .sidebar, .totop, #nav-toggle, a.anchor, .done-label { display: none; } .layout { display: block; } main { max-width: none; padding: 0; } a { color: inherit; text-decoration: none; } }
+  @media print { .sidebar, .totop, #nav-toggle, a.anchor, a.back, .done-label { display: none; } .layout { display: block; } main { max-width: none; padding: 0; } a { color: inherit; text-decoration: none; } details.deep { border: none; } details.deep summary { display: none; } details.deep .deep-body { display: block; } }
 </style>
 </head>
 <body id="top">
@@ -147,7 +158,9 @@ provider scopes (раздел 2), Guards и JWT (раздел 5) использ�
 <b>Стек:</b> <code>@nestjs/graphql</code> + Apollo Server, подход <b>code-first</b> (декораторы
 <code>@ObjectType</code>/<code>@Field</code>/<code>@Resolver</code> — прямое продолжение декораторного
 стиля из NestJS-лабы, а не отдельный DSL), <code>dataloader</code> для батчинга, тот же Prisma и
-Passport-JWT.</p>
+Passport-JWT.<br><br>
+<span class="small">Термины отмечены надстрочной цифрой при первом появлении и ведут в глоссарий (раздел 10);
+там же — обратная ссылка ↩ к месту первого упоминания.</span></p>
 </div>
 
 <h2 id="sec-0"><label class="done-label"><input type="checkbox" class="done" data-key="sec-0"></label>0. Зачем этот лаб и что дальше <a class="anchor" href="#sec-0">#</a></h2>
@@ -164,6 +177,13 @@ Passport-JWT.</p>
 <div class="insight-box"><span class="tag">РЕШЕНИЕ GRAPHQL</span> Один endpoint (<code>/graphql</code>), и
 клиент сам описывает форму нужных данных в запросе — сервер отвечает <i>ровно</i> тем, что запрошено, ни
 байтом больше, за один round trip, независимо от глубины вложенности.</div>
+
+<div class="next-box"><span class="tag">ПЕРЕД РАЗДЕЛОМ <a href="#sec-2">2</a></span>
+<ul>
+<li>📖 Почитать: <a href="https://docs.nestjs.com/graphql/quick-start" target="_blank">NestJS GraphQL — Quick start</a> — официальная установка code-first подхода, с которого начинается раздел 2.</li>
+<li>📖 Почитать: <a href="https://graphql.org/learn/" target="_blank">graphql.org/learn</a> — официальный учебник по спецификации: типы, запросы, схема, мутации, резолверы, независимо от языка сервера.</li>
+<li>▶ Посмотреть: <a href="https://www.youtube.com/results?search_query=NestJS+GraphQL+code+first+tutorial" target="_blank">NestJS GraphQL code first tutorial</a>.</li>
+</ul></div>
 
 <h2 id="sec-2"><label class="done-label"><input type="checkbox" class="done" data-key="sec-2"></label>2. Типы, Query и Mutation (code-first) <a class="anchor" href="#sec-2">#</a></h2>
 <pre><code>@ObjectType()
@@ -187,11 +207,25 @@ export class TicketsResolver {
     return this.prisma.ticket.findMany();
   }
 }</code></pre>
-<div class="insight-box"><span class="tag">ПРЯМАЯ ПАРАЛЛЕЛЬ С NESTJS-ЛАБОЙ</span> <code>@ObjectType()</code> и
-<code>@Field()</code> — те же декораторы, тот же механизм <code>reflect-metadata</code> из раздела 1
-NestJS-лабы, просто вместо HTTP-маршрута они описывают узел GraphQL-схемы. При старте приложения
-<code>@nestjs/graphql</code> читает эти метаданные со всех классов и <b>генерирует</b> файл схемы
-автоматически — вы не пишете <code>.graphql</code>-файл руками, он выводится из TypeScript-классов.</div>
+<div class="insight-box"><span class="tag">ПРЯМАЯ ПАРАЛЛЕЛЬ С NESTJS-ЛАБОЙ</span> ObjectType<a class="fnref" href="#term-1" id="ref-1" title="к глоссарию">1</a>
+и <code>@Field()</code> — те же декораторы, тот же механизм <code>reflect-metadata</code> из раздела 1
+NestJS-лабы, просто вместо HTTP-маршрута они описывают узел GraphQL-схемы. Resolver<a class="fnref" href="#term-2" id="ref-2" title="к глоссарию">2</a>
+при старте приложения читает эти метаданные со всех классов и <b>генерирует</b> файл схемы автоматически —
+вы не пишете <code>.graphql</code>-файл руками, он выводится из TypeScript-классов.</div>
+<details class="deep"><summary>🔬 Под капотом: как autoSchemaFile превращает классы в SDL</summary><div class="deep-body">
+<p>При старте <code>GraphQLModule.forRoot({ autoSchemaFile: true })</code> обходит все классы, помеченные
+<code>@ObjectType()</code>, <code>@InputType()</code> и <code>@Resolver()</code>, читает их метаданные (те же
+<code>reflect-metadata</code>-записи, что и в NestJS-лабе) и на основе этого строит объект схемы GraphQL в
+памяти, а затем сериализует его в файл <code>schema.gql</code> в формате SDL (Schema Definition Language) —
+человекочитаемого текстового описания типов. Файл создаётся заново при каждом старте приложения в режиме
+разработки, поэтому его обычно не коммитят в git, а добавляют в <code>.gitignore</code>.</p>
+</div></details>
+
+<div class="next-box"><span class="tag">ПЕРЕД РАЗДЕЛОМ <a href="#sec-3">3</a></span>
+<ul>
+<li>📖 Почитать: <a href="https://docs.nestjs.com/graphql/resolvers" target="_blank">NestJS GraphQL — Resolvers</a>.</li>
+<li>▶ Посмотреть: <a href="https://www.youtube.com/results?search_query=GraphQL+resolver+parent+args+execution+order" target="_blank">GraphQL resolver parent args execution order</a>.</li>
+</ul></div>
 
 <h2 id="sec-3"><label class="done-label"><input type="checkbox" class="done" data-key="sec-3"></label>3. Резолверы: parent, args, порядок вызова <a class="anchor" href="#sec-3">#</a></h2>
 <pre><code>@ResolveField(() => [Comment])
@@ -200,14 +234,31 @@ comments(@Parent() ticket: Ticket) {
 }</code></pre>
 <div class="why"><b>Зачем разбирать порядок вызова:</b> GraphQL резолвит поля <b>по одному узлу дерева
 запроса за раз</b> — сначала выполнится резолвер <code>tickets()</code>, и только для каждого полученного
-тикета отдельно запустится <code>comments(@Parent() ticket)</code>. Это не побочный эффект плохого кода — это
-буквально то, как работает граф резолверов в GraphQL, и именно это открывает дверь для N+1 в разделе 4.</div>
+тикета отдельно запустится <code>comments(@Parent()</code><a class="fnref" href="#term-3" id="ref-3" title="к глоссарию">3</a>
+<code>ticket)</code>. Это не побочный эффект плохого кода — это буквально то, как работает граф резолверов в
+GraphQL, и именно это открывает дверь для N+1 в разделе 4.</div>
+<details class="deep"><summary>🔬 Под капотом: резолвинг как обход дерева по уровням</summary><div class="deep-body">
+<p>GraphQL-исполнитель обходит запрошенное дерево полей breadth-first в пределах каждого уровня: сначала
+вычисляются <i>все</i> резолверы верхнего уровня (в вашем случае — один вызов <code>tickets()</code>,
+вернувший массив), затем для <i>каждого элемента</i> этого массива параллельно (через
+<code>Promise.all</code> внутри исполнителя) вызывается резолвер следующего уровня — <code>comments</code>.
+Именно слово "параллельно, но по одному вызову на элемент" и есть источник N+1: 10 тикетов — 10 отдельных,
+ничего не знающих друг о друге вызовов <code>comments()</code>.</p>
+</div></details>
+
+<div class="next-box"><span class="tag">ПЕРЕД РАЗДЕЛОМ <a href="#sec-4">4</a></span>
+<ul>
+<li>📖 Почитать: <a href="https://github.com/graphql/dataloader" target="_blank">DataLoader (GitHub)</a> — официальный README библиотеки, включая объяснение батчинга и кэша.</li>
+<li>📖 Почитать: <a href="https://www.prisma.io/docs/orm/prisma-client/queries/query-optimization-performance" target="_blank">Prisma — Query optimization / N+1</a> — та же страница, что в NestJS-лабе, здесь особенно актуален раздел про GraphQL-контекст.</li>
+<li>▶ Посмотреть: <a href="https://www.youtube.com/watch?v=7oMfBGEdwsc" target="_blank">Solving the N+1 problem with a dataloader</a>.</li>
+</ul></div>
 
 <h2 id="sec-4"><label class="done-label"><input type="checkbox" class="done" data-key="sec-4"></label>4. N+1 в резолверах и DataLoader <a class="anchor" href="#sec-4">#</a></h2>
-<p>N+1 из NestJS-лабы (раздел 4) лечился одним <code>include</code> в Prisma — потому что там вы сами
-писали один запрос. Здесь вы <i>не</i> контролируете, какие поля запросит клиент — GraphQL-запрос
-<code>{ tickets { comments { text } } }</code> вызовет резолвер <code>comments</code> для каждого тикета
-по отдельности, а вы не знаете заранее, сколько их будет.</p>
+<p>N+1<a class="fnref" href="#term-4" id="ref-4" title="к глоссарию">4</a> из NestJS-лабы (раздел 4) лечился
+одним <code>include</code> в Prisma — потому что там вы сами писали один запрос. Здесь вы <i>не</i>
+контролируете, какие поля запросит клиент — GraphQL-запрос <code>{ tickets { comments { text } } }</code>
+вызовет резолвер <code>comments</code> для каждого тикета по отдельности, а вы не знаете заранее, сколько их
+будет.</p>
 <pre><code>@Injectable({ scope: Scope.REQUEST })
 export class CommentsLoader {
   public readonly batchComments = new DataLoader<number, Comment[]>(async (ticketIds) => {
@@ -218,19 +269,34 @@ export class CommentsLoader {
   });
   constructor(private prisma: PrismaService) {}
 }</code></pre>
-<div class="insight-box"><span class="tag">ПОД КАПОТОМ</span> <code>DataLoader</code> не выполняет запрос
-сразу — он копит все вызовы <code>.load(id)</code>, поступившие в течение одного "тика" event loop
-(микрозадачи), и объединяет их в один batch-вызов колбэка с массивом всех накопленных id. Это тот же event
-loop, что вы разбирали в JS-лабе (сессия 5) — только здесь его особенность используется намеренно, как
-механизм батчинга.</div>
+<div class="insight-box"><span class="tag">ПОД КАПОТОМ</span> DataLoader<a class="fnref" href="#term-5" id="ref-5" title="к глоссарию">5</a>
+не выполняет запрос сразу — он копит все вызовы <code>.load(id)</code>, поступившие в течение одного "тика"
+event loop (микрозадачи), и объединяет их в один batch-вызов колбэка с массивом всех накопленных id. Это тот
+же event loop, что вы разбирали в JS-лабе (сессия 5) — только здесь его особенность используется намеренно,
+как механизм батчинга.</div>
+<details class="deep"><summary>🔬 Под капотом: на чём именно основан "один тик" DataLoader</summary><div class="deep-body">
+<p>Внутри библиотека <code>dataloader</code> использует <code>process.nextTick</code> (в Node.js) — это
+означает, что она откладывает выполнение batch-функции до момента, когда текущая синхронная часть кода
+полностью завершится, но раньше, чем управление вернётся к следующему циклу событий. На практике: все
+вызовы <code>.load()</code>, случившиеся синхронно один за другим внутри резолвинга одного GraphQL-запроса,
+гарантированно попадают в один batch — именно поэтому 10 параллельных вызовов резолвера <code>comments</code>
+из раздела 3 превращаются в один SQL-запрос, а не десять.</p>
+</div></details>
 <div class="why"><b>Зачем <code>Scope.REQUEST</code>:</b> прямая связь с разделом 2 NestJS-лабы — DataLoader
 обязан быть новым на каждый HTTP-запрос: его внутренний кэш и очередь батча не должны переживать один запрос
 и тем более утекать в следующий, к другому пользователю.</div>
 
+<div class="next-box"><span class="tag">ПЕРЕД РАЗДЕЛОМ <a href="#sec-5">5</a></span>
+<ul>
+<li>📖 Почитать: <a href="https://docs.nestjs.com/graphql/tooling" target="_blank">NestJS GraphQL — Other features (Guards, Interceptors, GqlExecutionContext)</a> — официальный раздел, целиком посвящённый именно этому мостику.</li>
+<li>▶ Посмотреть: <a href="https://www.youtube.com/results?search_query=NestJS+GqlExecutionContext+guards+tutorial" target="_blank">NestJS GqlExecutionContext guards tutorial</a>.</li>
+</ul></div>
+
 <h2 id="sec-5"><label class="done-label"><input type="checkbox" class="done" data-key="sec-5"></label>5. Guards и контекст в GraphQL <a class="anchor" href="#sec-5">#</a></h2>
 <p><code>AuthGuard('jwt')</code> и <code>RolesGuard</code> из NestJS-лабы (раздел 5) написаны в расчёте на
 HTTP <code>ExecutionContext</code> — <code>context.switchToHttp().getRequest()</code>. В GraphQL запрос
-устроен иначе (единый POST на <code>/graphql</code>), поэтому нужен один явный мостик:</p>
+устроен иначе (единый POST на <code>/graphql</code>), поэтому нужен один явный мостик —
+GqlExecutionContext<a class="fnref" href="#term-6" id="ref-6" title="к глоссарию">6</a>:</p>
 <pre><code>getRequest(context: ExecutionContext) {
   const ctx = GqlExecutionContext.create(context);
   return ctx.getContext().req;
@@ -239,13 +305,29 @@ HTTP <code>ExecutionContext</code> — <code>context.switchToHttp().getRequest()
 и <code>RolesGuard</code> — не меняются ни на строчку. Меняется только то, <i>откуда</i> Guard достаёт
 объект запроса. Это подтверждает, что Guard в разделе 5 NestJS-лабы был написан правильно с самого начала —
 абстракция <code>ExecutionContext</code> ровно для того и существует, чтобы не привязываться к транспорту.</div>
+<details class="deep"><summary>🔬 Под капотом: почему обычный Middleware здесь бы не сработал</summary><div class="deep-body">
+<p>Middleware в Express/Nest привязан к HTTP-маршруту (пути и методу) — а у GraphQL всего один маршрут,
+<code>POST /graphql</code>, на который приходят вообще все запросы: и чтение списка тикетов, и мутация
+удаления. Middleware в принципе не может знать, какое GraphQL-поле сейчас резолвится — оно видит только
+"кто-то постучался в /graphql". Guard, в отличие от Middleware, получает доступ к
+<code>GqlExecutionContext</code> уже <i>после</i> того, как GraphQL-исполнитель определил, какой именно
+резолвер сейчас будет вызван — поэтому вся авторизационная логика в GraphQL-мире живёт в Guards, а не в
+Middleware, даже там, где в чистом REST можно было бы обойтись последним.</p>
+</div></details>
+
+<div class="next-box"><span class="tag">ПЕРЕД РАЗДЕЛОМ <a href="#sec-6">6</a></span>
+<ul>
+<li>📖 Почитать: <a href="https://docs.nestjs.com/graphql/subscriptions" target="_blank">NestJS GraphQL — Subscriptions</a>.</li>
+<li>📖 Почитать: <a href="https://www.apollographql.com/docs/apollo-server/data/subscriptions" target="_blank">Apollo Server — Subscriptions</a> — независимо от Nest, полезно увидеть спецификацию со стороны Apollo.</li>
+<li>▶ Посмотреть: <a href="https://www.youtube.com/results?search_query=GraphQL+subscriptions+PubSub+tutorial" target="_blank">GraphQL subscriptions PubSub tutorial</a>.</li>
+</ul></div>
 
 <h2 id="sec-6"><label class="done-label"><input type="checkbox" class="done" data-key="sec-6"></label>6. Subscriptions: живые данные без Gateway <a class="anchor" href="#sec-6">#</a></h2>
 <pre><code>const pubSub = new PubSub();
 
 @Subscription(() => Ticket)
 ticketUpdated() {
-  return pubSub.asyncIterator('ticketUpdated');
+  return pubSub.asyncIterableIterator('ticketUpdated');
 }
 
 @Mutation(() => Ticket)
@@ -254,12 +336,28 @@ async updateStatus(@Args('id') id: number, @Args('status') status: string) {
   pubSub.publish('ticketUpdated', { ticketUpdated: ticket });
   return ticket;
 }</code></pre>
+<p>PubSub<a class="fnref" href="#term-7" id="ref-7" title="к глоссарию">7</a> — внутренний брокер событий, на
+котором строятся Subscriptions.</p>
 <table>
 <tr><th>WebSocket Gateway (NestJS-лаба)</th><th>GraphQL Subscription</th></tr>
 <tr><td>своя комната на каждый тикет (<code>ticket:${id}</code>)</td><td>по умолчанию канал один на весь тип события — фильтрация через <code>withFilter</code></td></tr>
 <tr><td>формат сообщения — что напишете руками</td><td>формат — тот же <code>Ticket</code>-тип, что и у Query/Mutation, типобезопасно</td></tr>
 <tr><td>отдельный протокол поверх Socket.IO</td><td>транспорт (обычно WebSocket) скрыт внутри Apollo — вы описываете событие, а не сокет</td></tr>
 </table>
+<details class="deep"><summary>🔬 Под капотом: почему стандартный PubSub не для продакшена</summary><div class="deep-body">
+<p>Класс <code>PubSub</code> из пакета <code>graphql-subscriptions</code> по умолчанию хранит подписчиков
+<b>в памяти одного процесса</b> — официальная документация Apollo прямо предупреждает, что эта реализация не
+подходит для продакшена. Проблема та же, что с комнатами Socket.IO из раздела 6 NestJS-лабы: если у вас
+несколько инстансов сервера за балансировщиком, мутация, обработанная одним инстансом, никак не уведомит
+подписчиков, подключённых к другому. Решение — PubSub-реализация поверх внешнего хранилища (обычно Redis),
+которое видно всем инстансам одинаково.</p>
+</div></details>
+
+<div class="next-box"><span class="tag">ПЕРЕД РАЗДЕЛОМ <a href="#sec-7">7</a></span>
+<ul>
+<li>📖 Почитать: <a href="https://docs.nestjs.com/fundamentals/testing" target="_blank">NestJS — Testing</a> — та же страница, что и в NestJS-лабе, здесь резолвер тестируется буквально так же.</li>
+<li>▶ Посмотреть: <a href="https://www.youtube.com/results?search_query=testing+GraphQL+resolvers+NestJS+Jest" target="_blank">Testing GraphQL resolvers NestJS Jest</a>.</li>
+</ul></div>
 
 <h2 id="sec-7"><label class="done-label"><input type="checkbox" class="done" data-key="sec-7"></label>7. Тестирование резолверов <a class="anchor" href="#sec-7">#</a></h2>
 <pre><code>it('возвращает тикеты', async () => {
@@ -273,6 +371,13 @@ async updateStatus(@Args('id') id: number, @Args('status') status: string) {
 <code>@Injectable</code> под капотом декоратора <code>@Resolver</code>, поэтому
 <code>Test.createTestingModule</code> тестирует его абсолютно так же, как любой сервис в разделе 7
 NestJS-лабы — GraphQL здесь не участвует вообще, только логика класса.</div>
+<details class="deep"><summary>🔬 Под капотом: чего НЕ проверяет такой unit-тест</summary><div class="deep-body">
+<p>Схема GraphQL (SDL, раздел 2) собирается и валидируется только тогда, когда поднимается настоящий
+<code>GraphQLModule</code> — то есть в unit-тесте резолвера, как выше, вы не узнаете, если случайно поломали
+типы схемы (например, забыли <code>@Field()</code> на новом свойстве). Эту категорию ошибок ловит только
+e2e-тест шага 5.2, который реально отправляет строку GraphQL-запроса через <code>/graphql</code> и заставляет
+Apollo целиком провалидировать её против собранной схемы.</p>
+</div></details>
 
 <h2 id="sec-8"><label class="done-label"><input type="checkbox" class="done" data-key="sec-8"></label>8. Пошаговая сборка проекта (5 сессий) <a class="anchor" href="#sec-8">#</a></h2>
 
@@ -291,7 +396,8 @@ NestJS-лабы посчитайте: сколько отдельных HTTP-з�
   autoSchemaFile: true,
 })</code></pre>
 <p>Опишите <code>Ticket</code> ObjectType и <code>tickets()</code> Query по образцу раздела 2, запустите
-приложение и откройте Apollo Sandbox по адресу <code>/graphql</code> в браузере.</p>
+приложение и откройте Apollo Sandbox<a class="fnref" href="#term-8" id="ref-8" title="к глоссарию">8</a> по
+адресу <code>/graphql</code> в браузере.</p>
 </div></div>
 
 <div class="step" id="step-1-3"><span class="step-head"><label class="done-label"><input type="checkbox" class="done" data-key="step-1-3"></label><span class="num">Шаг 1.3</span>Первая Mutation<a class="anchor" href="#step-1-3">#</a></span><div class="step-body">
@@ -342,7 +448,12 @@ NestJS-лабы) и повторите запрос из шага 2.3 для 10 
 из шага 1.1 — это не одно и то же измерение, но обе цифры показывают одну и ту же болезнь на разных уровнях.</div>
 </div></div>
 
-<div class="step" id="step-3-2"><span class="step-head"><label class="done-label"><input type="checkbox" class="done" data-key="step-3-2"></label><span class="num">Шаг 3.2</span>DataLoader: батчинг<a class="anchor" href="#step-3-2">#</a></span><div class="step-body">
+<div class="step" id="step-3-2"><span class="step-head"><label class="done-label"><input type="checkbox" class="done" data-key="step-3-2"></label><span class="num">Шаг 3.2 (самый важный шаг)</span>DataLoader: батчинг<a class="anchor" href="#step-3-2">#</a></span><div class="step-body">
+<div class="next-box"><span class="tag">ПЕРЕД ШАГОМ</span>
+<ul>
+<li>📖 Почитать: <a href="https://github.com/graphql/dataloader" target="_blank">DataLoader (GitHub)</a> — если раздел 4 показался быстрым, здесь тот же механизм на официальных примерах авторов библиотеки.</li>
+<li>▶ Посмотреть: <a href="https://www.youtube.com/results?search_query=DataLoader+batching+caching+tutorial" target="_blank">DataLoader batching caching tutorial</a>.</li>
+</ul></div>
 <pre><code>npm i dataloader</code></pre>
 <p>Реализуйте <code>CommentsLoader</code> по образцу раздела 4 и подключите его вызов в
 <code>comments(@Parent() ticket)</code> вместо прямого запроса к Prisma:
@@ -380,9 +491,10 @@ export class GqlAuthGuard extends AuthGuard('jwt') {
 </div></div>
 
 <div class="step" id="step-4-3"><span class="step-head"><label class="done-label"><input type="checkbox" class="done" data-key="step-4-3"></label><span class="num">Шаг 4.3</span>Subscription ticketUpdated<a class="anchor" href="#step-4-3">#</a></span><div class="step-body">
-<p>Реализуйте <code>ticketUpdated</code> Subscription и публикацию из <code>updateStatus</code> по образцу
-раздела 6. Откройте Apollo Sandbox в двух вкладках — в одной подпишитесь, в другой выполните мутацию, и
-убедитесь, что первая вкладка получает обновление без перезагрузки.</p>
+<p>Реализуйте <code>ticketUpdated</code> Subscription<a class="fnref" href="#term-9" id="ref-9" title="к глоссарию">9</a>
+и публикацию из <code>updateStatus</code> по образцу раздела 6. Откройте Apollo Sandbox в двух вкладках — в
+одной подпишитесь, в другой выполните мутацию, и убедитесь, что первая вкладка получает обновление без
+перезагрузки.</p>
 </div></div>
 
 <div class="step" id="step-4-4"><span class="step-head"><label class="done-label"><input type="checkbox" class="done" data-key="step-4-4"></label><span class="num">Шаг 4.4</span>Auth для subscription<a class="anchor" href="#step-4-4">#</a></span><div class="step-body">
@@ -428,28 +540,24 @@ WebSocket Gateway из раздела 6 NestJS-лабы.</div>
 <li>DataLoader: батчинг вызовов в пределах одного тика event loop + кэш на время запроса.</li>
 <li>Почему DataLoader обязан быть <code>Scope.REQUEST</code>, а не singleton.</li>
 <li>GqlExecutionContext — мостик между GraphQL-контекстом и обычным <code>ExecutionContext</code> Guard'ов.</li>
+<li>Почему авторизационная логика в GraphQL живёт в Guards, а не в Middleware.</li>
 <li>Subscription — типобезопасный канал событий поверх PubSub, отличие от WebSocket Gateway.</li>
-<li>Резолвер тестируется как обычный provider — GraphQL не участвует в unit-тесте вообще.</li>
+<li>Резолвер тестируется как обычный provider — GraphQL не участвует в unit-тесте вообще, но и не проверяет схему.</li>
 </ul>
 
 <h2 id="sec-10"><label class="done-label"><input type="checkbox" class="done" data-key="sec-10"></label>10. Глоссарий терминов <a class="anchor" href="#sec-10">#</a></h2>
-<p class="glossary-item"><b>ObjectType</b> — класс, декорированный <code>@ObjectType()</code>, описывающий
-узел GraphQL-схемы.</p>
-<p class="glossary-item"><b>Resolver</b> — класс, отвечающий за то, как получить данные для типа или
-конкретного поля.</p>
-<p class="glossary-item"><b>Query / Mutation / Subscription</b> — три вида операций GraphQL: чтение, запись,
-подписка на события соответственно.</p>
-<p class="glossary-item"><b>Parent</b> — результат резолвера родительского поля, доступный в резолвере
-вложенного поля через <code>@Parent()</code>.</p>
-<p class="glossary-item"><b>N+1 (GraphQL)</b> — резолвер вложенного поля выполняется отдельно на каждый
-элемент родительского списка, порождая по одному запросу на элемент без батчинга.</p>
-<p class="glossary-item"><b>DataLoader</b> — утилита, объединяющая вызовы <code>.load()</code> в пределах
-одного тика event loop в один batch-запрос с кэшем на время его жизни.</p>
-<p class="glossary-item"><b>GqlExecutionContext</b> — обёртка, извлекающая объект запроса из GraphQL-контекста
-для повторного использования HTTP-ориентированных Guard'ов.</p>
-<p class="glossary-item"><b>PubSub</b> — внутренний брокер событий, на котором строятся Subscriptions.</p>
-<p class="glossary-item"><b>Apollo Sandbox</b> — встроенный веб-интерфейс для ручного выполнения GraphQL-
-запросов при разработке.</p>
+<p class="small">В порядке первого появления в тексте.</p>
+<div class="glossary">
+<p class="glossary-item" id="term-1"><b>1. ObjectType</b> <a class="back" href="#ref-1" title="к первому упоминанию">↩</a> — класс, декорированный <code>@ObjectType()</code>, описывающий узел GraphQL-схемы.</p>
+<p class="glossary-item" id="term-2"><b>2. Resolver</b> <a class="back" href="#ref-2" title="к первому упоминанию">↩</a> — класс, отвечающий за то, как получить данные для типа или конкретного поля.</p>
+<p class="glossary-item" id="term-3"><b>3. Parent</b> <a class="back" href="#ref-3" title="к первому упоминанию">↩</a> — результат резолвера родительского поля, доступный в резолвере вложенного поля через <code>@Parent()</code>.</p>
+<p class="glossary-item" id="term-4"><b>4. N+1 (GraphQL)</b> <a class="back" href="#ref-4" title="к первому упоминанию">↩</a> — резолвер вложенного поля выполняется отдельно на каждый элемент родительского списка, порождая по одному запросу на элемент без батчинга.</p>
+<p class="glossary-item" id="term-5"><b>5. DataLoader</b> <a class="back" href="#ref-5" title="к первому упоминанию">↩</a> — утилита, объединяющая вызовы <code>.load()</code> в пределах одного тика event loop в один batch-запрос с кэшем на время его жизни.</p>
+<p class="glossary-item" id="term-6"><b>6. GqlExecutionContext</b> <a class="back" href="#ref-6" title="к первому упоминанию">↩</a> — обёртка, извлекающая объект запроса из GraphQL-контекста для повторного использования HTTP-ориентированных Guard'ов.</p>
+<p class="glossary-item" id="term-7"><b>7. PubSub</b> <a class="back" href="#ref-7" title="к первому упоминанию">↩</a> — внутренний брокер событий, на котором строятся Subscriptions; реализация по умолчанию хранит подписчиков в памяти одного процесса.</p>
+<p class="glossary-item" id="term-8"><b>8. Apollo Sandbox</b> <a class="back" href="#ref-8" title="к первому упоминанию">↩</a> — встроенный веб-интерфейс для ручного выполнения GraphQL-запросов при разработке.</p>
+<p class="glossary-item" id="term-9"><b>9. Subscription</b> <a class="back" href="#ref-9" title="к первому упоминанию">↩</a> — третий вид GraphQL-операции (наряду с Query и Mutation), открывающий канал событий для клиента.</p>
+</div>
 
 <h2 id="sec-11"><label class="done-label"><input type="checkbox" class="done" data-key="sec-11"></label>11. Вопросы для самопроверки / собеседования <a class="anchor" href="#sec-11">#</a></h2>
 <ul>
@@ -461,17 +569,23 @@ WebSocket Gateway из раздела 6 NestJS-лабы.</div>
 <li>Почему DataLoader обязан жить в scope REQUEST, а не быть синглтоном?</li>
 <li>Что делает <code>GqlExecutionContext.create()</code>, и почему сам Guard не нужно переписывать при
 переходе с REST на GraphQL?</li>
+<li>Почему в GraphQL авторизационную логику нельзя вынести в обычный Middleware?</li>
 <li>Чем Subscription отличается от WebSocket Gateway с точки зрения гарантий типов?</li>
 </ul>
 
 <h2 id="sec-12"><label class="done-label"><input type="checkbox" class="done" data-key="sec-12"></label>12. Что дальше <a class="anchor" href="#sec-12">#</a></h2>
 <table>
-<tr><th>Тема</th><th>Зачем после лабы</th></tr>
-<tr><td>Persisted queries</td><td>защита от произвольных тяжёлых запросов со стороны клиента — то, что не мешает изучению основ, но критично в проде</td></tr>
-<tr><td>Query complexity / depth limiting</td><td>ограничение на глубину и "стоимость" вложенных резолверов, чтобы один запрос не мог обрушить БД</td></tr>
-<tr><td>Apollo Federation</td><td>разделение одной большой схемы на несколько сервисов — логичное продолжение, если Helpdesk вырастет в несколько независимых доменов</td></tr>
-<tr><td>Кэширование на уровне поля (Apollo cache hints)</td><td>дальнейшая оптимизация после DataLoader, для полей, которые почти не меняются</td></tr>
+<tr><th>Тема</th><th>Зачем после лабы</th><th>Почитать</th></tr>
+<tr><td>Persisted queries</td><td>защита от произвольных тяжёлых запросов со стороны клиента — то, что не мешает изучению основ, но критично в проде</td><td><a href="https://www.apollographql.com/docs/apollo-server/performance/apq" target="_blank">Automatic persisted queries</a></td></tr>
+<tr><td>Query complexity / depth limiting</td><td>ограничение на глубину и "стоимость" вложенных резолверов, чтобы один запрос не мог обрушить БД</td><td><a href="https://www.npmjs.com/package/graphql-query-complexity" target="_blank">graphql-query-complexity</a></td></tr>
+<tr><td>Apollo Federation</td><td>разделение одной большой схемы на несколько сервисов — логичное продолжение, если Helpdesk вырастет в несколько независимых доменов</td><td><a href="https://www.apollographql.com/docs/federation" target="_blank">Apollo Federation</a></td></tr>
+<tr><td>Кэширование на уровне поля (Apollo cache hints)</td><td>дальнейшая оптимизация после DataLoader, для полей, которые почти не меняются</td><td><a href="https://www.apollographql.com/docs/apollo-server/performance/caching" target="_blank">Server-side caching</a></td></tr>
 </table>
+<div class="next-box"><span class="tag">ПОСЛЕ ЛАБЫ</span>
+<ul>
+<li>📖 Почитать: <a href="https://www.apollographql.com/docs/federation" target="_blank">Apollo Federation</a> — если Helpdesk когда-нибудь разрастётся в несколько сервисов.</li>
+<li>▶ Посмотреть: <a href="https://www.youtube.com/results?search_query=Apollo+Federation+explained" target="_blank">Apollo Federation explained</a>.</li>
+</ul></div>
 
 <a href="#top" class="totop">↑ Наверх</a>
 </main>
