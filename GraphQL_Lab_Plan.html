@@ -509,7 +509,7 @@ type Subscription { reviewAdded(movieId: ID!): Review! }</code></pre>
 <h2 id="sec-4"><label class="done-label" title="Отметить раздел пройденным"><input type="checkbox" class="done" data-key="sec-4"></label>4. Технологический стек и структура проекта <a class="anchor" href="#sec-4">#</a></h2>
 <table>
 <tr><th>Компонент</th><th>Выбор</th><th>Зачем</th></tr>
-<tr><td>Рантайм</td><td>Node.js 22 LTS+</td><td>нативный <code>fetch</code>, актуальные async-итераторы (нужны подпискам)</td></tr>
+<tr><td>Рантайм</td><td>Node 22+ (24 LTS тоже подходит)</td><td>нативный <code>fetch</code>, актуальные async-итераторы (нужны подпискам)</td></tr>
 <tr><td>Фреймворк</td><td>NestJS 11/12 (CommonJS-проект)</td><td>DI, модули, guards — GraphQL встраивается как ещё один «транспорт»</td></tr>
 <tr><td>GraphQL</td><td><code>@nestjs/graphql</code> + <code>@nestjs/apollo</code> + <code>@apollo/server</code> + <code>graphql</code> 16</td><td>code-first: классы → схема; Apollo Server как движок</td></tr>
 <tr><td>IDE для запросов</td><td>GraphiQL (встроен, <code>/graphql</code>)</td><td>автодополнение по интроспекции, вкладка заголовков, подписки</td></tr>
@@ -581,11 +581,11 @@ graphql-lab/                          ← git-репозиторий лабы
 Query.movies                  1         1              1
 Movie.director               10         1             10    ← один и тот же Нолан загружен 3 раза
 Movie.cast                   10         1             10
-CastCredit.person           ~28         1            ~28    ← Майкл Кейн загружен 3 раза
+CastCredit.person            21         1             21    ← Майкл Кейн загружен 3 раза
                                                      ────
-                                                     ~49 SQL на один запрос
+                                                     ≈43 SQL на один запрос
 </pre>
-<p>На локалке с 10 фильмами это незаметно — 49 запросов по 1 мс. На проде с <code>limit: 50</code>, сетевой задержкой до БД 2 мс и пулом в 10 соединений —
+<p>На локалке с 10 фильмами это незаметно — ≈43 запроса по 1 мс. На проде с <code>limit: 50</code>, сетевой задержкой до БД 2 мс и пулом в 10 соединений —
 это уже сотни миллисекунд и забитый пул. А клиент может вложить ещё уровень, и получится N×M.</p>
 
 <h3>Решение с DataLoader</h3>
@@ -1315,7 +1315,7 @@ query Catalog {
 <p>Откройте сгенерированный <code>src/schema.gql</code>: там появилось <code>movies(limit: Int! = 20, offset: Int! = 0): [Movie!]!</code>. Обратите внимание: аргумент с <code>defaultValue</code> стал
 <b>non-null</b> (<code>Int!</code>), но необязательным для передачи. Это нормально по спецификации: «не передан» → подставится 20; а явный <code>null</code> клиент передать не сможет.</p>
 <p>Возвращаемый тип <code>[Movie!]!</code> NestJS сделал non-null по умолчанию: и список, и элементы. Именно такое значение по умолчанию у <code>@nestjs/graphql</code>
-(в отличие от самой спецификации, где по умолчанию всё nullable). Поменять глобально можно опцией <code>nullable</code> в <code>buildSchemaOptions</code>, но в лабе мы решаем про nullability поле за полем.</p>
+(в отличие от самой спецификации, где по умолчанию всё nullable). Глобального переключателя в <code>@nestjs/graphql</code> нет — nullability задаётся на каждом поле через <code>@Field({ nullable: true })</code>, и в лабе мы решаем про nullability поле за полем.</p>
 <p><code>ParseIntPipe</code> на аргументе <code>id</code>: тип <code>ID</code> приходит строкой, пайп превращает её в число или бросает <code>BadRequestException</code> для <code>"abc"</code>.
 Пайпы, guards и interceptors Nest работают для резолверов так же, как для контроллеров — это одно из главных удобств NestJS.</p>
 </div></details>
@@ -1348,7 +1348,7 @@ curl -s -G localhost:3000/graphql -H 'apollo-require-preflight: true' \
   __type(name: "Movie") {
     name
     description
-    fields { name type { kind name ofType { kind name ofType { name } } } }
+    fields { name type { kind name ofType { kind name ofType { kind name ofType { kind name } } } } }
   }
 }</code></pre>
 <pre><code>git add -A &amp;&amp; git commit -m "session 1: first queries"   # schema.gql попадает в коммит</code></pre>
