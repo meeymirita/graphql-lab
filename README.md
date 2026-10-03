@@ -13,7 +13,7 @@ CineGraph — каталог фильмов, режиссёров и рецен�
 
 ## Стек
 
-NestJS + `@nestjs/graphql` + Apollo Server (code-first: `@ObjectType`/`@Field`/`@Resolver`), Prisma 7 + `@prisma/adapter-pg` + PostgreSQL 17, `dataloader` для батчинга, `@nestjs/jwt` + bcryptjs, `graphql-subscriptions`/`graphql-redis-subscriptions` + Redis для подписок, `graphql-query-complexity`. Всё в Docker.
+NestJS + `@nestjs/graphql` + Apollo Server (code-first: `@ObjectType`/`@Field`/`@Resolver`), Prisma 7 + `@prisma/adapter-pg` + PostgreSQL 18, `dataloader` для батчинга, `@nestjs/jwt` + bcryptjs, `graphql-subscriptions`/`graphql-redis-subscriptions` + Redis для подписок, `graphql-query-complexity`. Всё в Docker.
 
 ## Формат
 
