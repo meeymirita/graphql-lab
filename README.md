@@ -17,7 +17,7 @@ NestJS + `@nestjs/graphql` + Apollo Server (code-first: `@ObjectType`/`@Field`/`
 
 ## Формат
 
-Методичка [`GraphQL_Lab_Plan.html`](GraphQL_Lab_Plan.html) — открывается в браузере, прогресс по чекбоксам сохраняется локально.
+Методичка [`graphql.html`](graphql.html) — открывается в браузере, прогресс по чекбоксам сохраняется локально.
 
 ## Что внутри (3 сессии)
 
