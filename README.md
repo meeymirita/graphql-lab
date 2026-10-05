@@ -17,7 +17,7 @@ NestJS + `@nestjs/graphql` + Apollo Server (code-first: `@ObjectType`/`@Field`/`
 
 ## Формат
 
-Методичка [`graphql.html`](graphql.html) — открывается в браузере, прогресс по чекбоксам сохраняется локально.
+Методичка [`graphql.html`](graphql.html) ([открыть на сайте](https://anitech.meeymirita.ru/works/graphql.html)) — открывается в браузере, прогресс по чекбоксам сохраняется локально.
 
 ## Что внутри (3 сессии)
 
@@ -26,6 +26,10 @@ NestJS + `@nestjs/graphql` + Apollo Server (code-first: `@ObjectType`/`@Field`/`
 - **Сессия 3** — подписки, Redis, защита, тесты: живая лента рецензий, два инстанса и Redis Pub/Sub, клиент без библиотек (`fetch` + `graphql-ws`), depth limit и query complexity, unit- и e2e-тесты, "Production Hell" — финальный сценарий без подсказок
 
 Разделы 1–8 методички — теория (типичные заблуждения о GraphQL, как GraphQL устроен внутри, итоговая архитектура, стек и структура, N+1 и DataLoader, сценарий жизни одной рецензии, ошибки и nullability, пагинация/безопасность/кэш), раздел 9 — три сессии заданий, разделы 10–13 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
+
+## Лицензия и авторство
+
+Код — MIT, тексты — CC BY 4.0, обложки и иллюстрации не покрыты (см. [LICENSE](LICENSE)). Кто что сделал: [NOTICE](NOTICE).
 
 ---
 
