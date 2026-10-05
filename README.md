@@ -1,6 +1,6 @@
 # GraphQL Lab — CineGraph
 
-![GraphQL](GraphQL.png)
+![GraphQL](https://meeymirita-files.storage.yandexcloud.net/graphql/GraphQL.png)
 
 > **24.09.2026 — методичка вычитана и исправлена.** Что найдено и что поправлено — в [fixes/backend/graphql.md](https://github.com/meeymirita/lab-fixes/blob/main/backend/graphql.md) репозитория `lab-fixes`.
 
